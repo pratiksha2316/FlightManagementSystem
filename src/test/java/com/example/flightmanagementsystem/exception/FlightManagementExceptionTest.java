@@ -18,23 +18,21 @@ class FlightManagementExceptionTest {
     }
 
     @Test
-    void duplicateResourceExceptionShouldKeepMessageAndBeUncheckedApplicationException() {
-        DuplicateResourceException exception = new DuplicateResourceException("flightNumber already exists");
+    void flightManagementExceptionShouldKeepMessageForNonValidationErrors() {
+        FlightManagementException exception = new FlightManagementException("flightNumber already exists");
 
         assertEquals("flightNumber already exists", exception.getMessage());
-        assertInstanceOf(FlightManagementException.class, exception);
         assertInstanceOf(RuntimeException.class, exception);
     }
 
     @Test
-    void internalApplicationExceptionShouldKeepMessageAndCause() {
+    void flightManagementExceptionShouldKeepMessageAndCause() {
         Exception cause = new Exception("repository failure");
 
-        InternalApplicationException exception = new InternalApplicationException("Unexpected application error", cause);
+        FlightManagementException exception = new FlightManagementException("Unexpected application error", cause);
 
         assertEquals("Unexpected application error", exception.getMessage());
         assertSame(cause, exception.getCause());
-        assertInstanceOf(FlightManagementException.class, exception);
         assertInstanceOf(RuntimeException.class, exception);
     }
 }
