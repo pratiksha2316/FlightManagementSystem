@@ -11,6 +11,14 @@ public enum ErrorCode {
     FLIGHT_HOURS_MUST_BE_POSITIVE(400, "flightHours must be positive"),
     FLIGHT_NUMBER_NOT_FOUND(404, "flightNumber does not exist"),
     FLIGHT_INSTANCE_ALREADY_EXISTS(409, "flightInstance already exists"),
+    FLIGHT_INSTANCE_ID_REQUIRED(400, "flightInstanceId is required"),
+    NUMBER_OF_SEATS_REQUIRED(400, "numberOfSeats is required"),
+    NUMBER_OF_SEATS_MUST_BE_POSITIVE(400, "numberOfSeats must be positive"),
+    PASSENGER_NAMES_REQUIRED(400, "passengerNames is required"),
+    PASSENGER_NAME_REQUIRED(400, "passengerName is required"),
+    PASSENGER_COUNT_MISMATCH(400, "numberOfSeats must match passengerNames size"),
+    FLIGHT_INSTANCE_NOT_FOUND(404, "flightInstanceId does not exist"),
+    SEATS_NOT_AVAILABLE(409, "requested seats are not available"),
     INTERNAL_ERROR(500, "Unexpected application error");
 
     private final int code;
