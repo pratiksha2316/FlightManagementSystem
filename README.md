@@ -24,6 +24,7 @@ An admin user can create a flight with:
 Validation:
 
 - Required fields must not be null or empty.
+- `totalSeats` must be a positive number.
 - Duplicate `flightNumber` is not allowed.
 
 ### 2. Create Flight Instance
@@ -36,11 +37,12 @@ An admin user can create a flight instance with:
 
 The system generates:
 
-- `flightInstanceId` as a string concatenation of `flightNumber` and `initialDepartureTime`.
+- `flightInstanceId` as a string concatenation of `flightNumber`, `_`, and `initialDepartureTime`.
 
 Validation:
 
 - Required fields must not be null or empty.
+- `flightHours` must be a positive number.
 - `flightNumber` must already exist.
 - Duplicate `flightNumber` and `initialDepartureTime` combination is not allowed.
 - No date format validation is required. The provided departure time is assumed to be valid and human readable.
@@ -56,6 +58,7 @@ A user can book a flight by directly providing:
 Validation:
 
 - Required fields must not be null or empty.
+- `numberOfSeats` must be a positive number.
 - `flightInstanceId` must exist.
 - `numberOfSeats` must match the size of `passengerNames`.
 - Booking must not exceed the total seats available for the flight.
@@ -126,6 +129,8 @@ Expected successful status:
 201 Created
 ```
 
+The response should return the full created flight resource.
+
 ### Create Flight Instance
 
 ```http
@@ -138,6 +143,8 @@ Expected successful status:
 201 Created
 ```
 
+The response should return the full created flight instance resource, including the generated `flightInstanceId`.
+
 ### Book Flight
 
 ```http
@@ -149,6 +156,8 @@ Expected successful status:
 ```text
 201 Created
 ```
+
+The response should return the full created booking resource.
 
 ## Error Handling Plan
 
@@ -188,8 +197,8 @@ This check and the booked-seat update must happen atomically.
 4. Implement booking with entity, repository, service, controller, concurrency handling, exceptions, and unit tests.
 5. Iterate on API design or validation behavior after each requirement is tested.
 
-## Open Questions
+## Confirmed Design Decisions
 
-- Should `totalSeats`, `flightHours`, and `numberOfSeats` require positive numeric values, or only non-null validation?
-- Should `flightInstanceId` concatenation include a separator between `flightNumber` and `initialDepartureTime` to avoid ambiguous IDs?
-- Should API responses return full created resources, generated IDs only, or minimal success messages?
+- `totalSeats`, `flightHours`, and `numberOfSeats` must be positive numbers.
+- `flightInstanceId` will use `_` as the separator between `flightNumber` and `initialDepartureTime`.
+- Successful create APIs should return full created resources.
