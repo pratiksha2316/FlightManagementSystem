@@ -57,7 +57,7 @@ curl -i -X POST http://localhost:8080/bookings \
   }'
 ```
 
-## Current Scope
+## Service Scope
 
 The system will support three core functional requirements:
 
@@ -213,6 +213,22 @@ Expected successful status:
 ```
 
 The response should return the full created booking resource.
+
+## Improvements
+
+- Add integration tests that run the full API flow: create flight, create flight instance, then booking.
+- Add repository unit tests for `FlightInstanceRepository`; currently only flight and booking repositories have focused tests.
+- Split `FlightMapper` into separate mappers: `FlightMapper`, `FlightInstanceMapper`, and `BookingMapper`.
+- Rename `FlightControllerExceptionHandler` to a generic name like `GlobalExceptionHandler`.
+- Add a fallback handler for unexpected exceptions returning `500 INTERNAL_ERROR`.
+- Use `HttpStatus` in `ErrorCode` instead of raw integer codes.
+- Add validation for malformed JSON and missing request body.
+- Add controller tests that verify the service receives correctly mapped request objects.
+- Add concurrency tests at service level, not only repository level.
+- Consider making `BookingRepository.trySaveBooking` return a richer result instead of boolean.
+- Add package-level naming consistency: current `dto` is controller DTO, `model` is service model, but README should explicitly document that.
+- Add negative API tests for all validation cases through MockMvc.
+- Add logs and metrics.
 
 ## Error Handling Plan
 
