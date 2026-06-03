@@ -1,10 +1,10 @@
 package com.example.flightmanagementsystem.service.impl;
 
-import com.example.flightmanagementsystem.dto.CreateFlightRequest;
-import com.example.flightmanagementsystem.dto.FlightResponse;
 import com.example.flightmanagementsystem.entity.Flight;
 import com.example.flightmanagementsystem.exception.FlightManagementException;
 import com.example.flightmanagementsystem.exception.ValidationException;
+import com.example.flightmanagementsystem.model.CreateFlightRequest;
+import com.example.flightmanagementsystem.model.FlightResponse;
 import com.example.flightmanagementsystem.repository.FlightRepository;
 import com.example.flightmanagementsystem.service.FlightService;
 import org.springframework.stereotype.Service;

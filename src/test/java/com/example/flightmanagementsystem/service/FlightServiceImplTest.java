@@ -7,11 +7,11 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.example.flightmanagementsystem.dto.CreateFlightRequest;
-import com.example.flightmanagementsystem.dto.FlightResponse;
 import com.example.flightmanagementsystem.entity.Flight;
 import com.example.flightmanagementsystem.exception.FlightManagementException;
 import com.example.flightmanagementsystem.exception.ValidationException;
+import com.example.flightmanagementsystem.model.CreateFlightRequest;
+import com.example.flightmanagementsystem.model.FlightResponse;
 import com.example.flightmanagementsystem.repository.FlightRepository;
 import com.example.flightmanagementsystem.service.impl.FlightServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
