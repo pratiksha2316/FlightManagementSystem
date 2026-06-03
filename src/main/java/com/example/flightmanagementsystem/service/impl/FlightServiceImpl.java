@@ -1,5 +1,6 @@
 package com.example.flightmanagementsystem.service.impl;
 
+import com.example.flightmanagementsystem.exception.ErrorCode;
 import com.example.flightmanagementsystem.entity.Flight;
 import com.example.flightmanagementsystem.exception.FlightManagementException;
 import com.example.flightmanagementsystem.exception.ValidationException;
@@ -25,7 +26,7 @@ public class FlightServiceImpl implements FlightService {
         Flight flight = new Flight(request.flightNumber().trim(), request.totalSeats());
         boolean saved = flightRepository.saveIfAbsent(flight);
         if (!saved) {
-            throw new FlightManagementException("flightNumber already exists");
+            throw new FlightManagementException(ErrorCode.FLIGHT_NUMBER_ALREADY_EXISTS);
         }
 
         return toResponse(flight);
@@ -33,16 +34,16 @@ public class FlightServiceImpl implements FlightService {
 
     private void validateCreateFlightRequest(CreateFlightRequest request) {
         if (request == null) {
-            throw new ValidationException("request is required");
+            throw new ValidationException(ErrorCode.REQUEST_REQUIRED);
         }
         if (request.flightNumber() == null || request.flightNumber().isBlank()) {
-            throw new ValidationException("flightNumber is required");
+            throw new ValidationException(ErrorCode.FLIGHT_NUMBER_REQUIRED);
         }
         if (request.totalSeats() == null) {
-            throw new ValidationException("totalSeats is required");
+            throw new ValidationException(ErrorCode.TOTAL_SEATS_REQUIRED);
         }
         if (request.totalSeats() <= 0) {
-            throw new ValidationException("totalSeats must be positive");
+            throw new ValidationException(ErrorCode.TOTAL_SEATS_MUST_BE_POSITIVE);
         }
     }
 

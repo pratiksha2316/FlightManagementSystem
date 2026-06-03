@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.example.flightmanagementsystem.exception.ErrorCode;
 import com.example.flightmanagementsystem.exception.FlightManagementException;
 import com.example.flightmanagementsystem.exception.ValidationException;
 import com.example.flightmanagementsystem.mapper.FlightMapper;
@@ -61,7 +62,7 @@ class FlightControllerTest {
     @Test
     void createFlightShouldReturnBadRequestForValidationException() throws Exception {
         when(flightService.createFlight(any(CreateFlightRequest.class)))
-                .thenThrow(new ValidationException("flightNumber is required"));
+                .thenThrow(new ValidationException(ErrorCode.FLIGHT_NUMBER_REQUIRED));
 
         mockMvc.perform(post("/flights")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -72,13 +73,14 @@ class FlightControllerTest {
                                 }
                                 """))
                 .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code", is(400)))
                 .andExpect(jsonPath("$.message", is("flightNumber is required")));
     }
 
     @Test
     void createFlightShouldReturnConflictForFlightManagementException() throws Exception {
         when(flightService.createFlight(any(CreateFlightRequest.class)))
-                .thenThrow(new FlightManagementException("flightNumber already exists"));
+                .thenThrow(new FlightManagementException(ErrorCode.FLIGHT_NUMBER_ALREADY_EXISTS));
 
         mockMvc.perform(post("/flights")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -89,6 +91,7 @@ class FlightControllerTest {
                                 }
                                 """))
                 .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code", is(409)))
                 .andExpect(jsonPath("$.message", is("flightNumber already exists")));
     }
 }

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import com.example.flightmanagementsystem.dto.CreateFlightRequestDto;
 import com.example.flightmanagementsystem.dto.ErrorResponseDto;
 import com.example.flightmanagementsystem.dto.FlightResponseDto;
+import com.example.flightmanagementsystem.exception.ErrorCode;
 import com.example.flightmanagementsystem.exception.ValidationException;
 import com.example.flightmanagementsystem.model.CreateFlightRequest;
 import com.example.flightmanagementsystem.model.FlightResponse;
@@ -44,8 +45,9 @@ class FlightMapperTest {
 
     @Test
     void toErrorResponseShouldMapExceptionMessage() {
-        ErrorResponseDto errorResponse = flightMapper.toErrorResponse(new ValidationException("flightNumber is required"));
+        ErrorResponseDto errorResponse = flightMapper.toErrorResponse(new ValidationException(ErrorCode.FLIGHT_NUMBER_REQUIRED));
 
+        assertEquals(400, errorResponse.code());
         assertEquals("flightNumber is required", errorResponse.message());
     }
 }

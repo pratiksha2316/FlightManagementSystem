@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.example.flightmanagementsystem.entity.Flight;
+import com.example.flightmanagementsystem.exception.ErrorCode;
 import com.example.flightmanagementsystem.exception.FlightManagementException;
 import com.example.flightmanagementsystem.exception.ValidationException;
 import com.example.flightmanagementsystem.model.CreateFlightRequest;
@@ -57,6 +58,7 @@ class FlightServiceImplTest {
         );
 
         assertEquals("request is required", exception.getMessage());
+        assertEquals(ErrorCode.REQUEST_REQUIRED, exception.getErrorCode());
         verify(flightRepository, never()).saveIfAbsent(any());
     }
 
@@ -68,6 +70,7 @@ class FlightServiceImplTest {
         );
 
         assertEquals("flightNumber is required", exception.getMessage());
+        assertEquals(ErrorCode.FLIGHT_NUMBER_REQUIRED, exception.getErrorCode());
         verify(flightRepository, never()).saveIfAbsent(any());
     }
 
@@ -79,6 +82,7 @@ class FlightServiceImplTest {
         );
 
         assertEquals("flightNumber is required", exception.getMessage());
+        assertEquals(ErrorCode.FLIGHT_NUMBER_REQUIRED, exception.getErrorCode());
         verify(flightRepository, never()).saveIfAbsent(any());
     }
 
@@ -90,6 +94,7 @@ class FlightServiceImplTest {
         );
 
         assertEquals("totalSeats is required", exception.getMessage());
+        assertEquals(ErrorCode.TOTAL_SEATS_REQUIRED, exception.getErrorCode());
         verify(flightRepository, never()).saveIfAbsent(any());
     }
 
@@ -101,6 +106,7 @@ class FlightServiceImplTest {
         );
 
         assertEquals("totalSeats must be positive", exception.getMessage());
+        assertEquals(ErrorCode.TOTAL_SEATS_MUST_BE_POSITIVE, exception.getErrorCode());
         verify(flightRepository, never()).saveIfAbsent(any());
     }
 
@@ -112,6 +118,7 @@ class FlightServiceImplTest {
         );
 
         assertEquals("totalSeats must be positive", exception.getMessage());
+        assertEquals(ErrorCode.TOTAL_SEATS_MUST_BE_POSITIVE, exception.getErrorCode());
         verify(flightRepository, never()).saveIfAbsent(any());
     }
 
@@ -125,5 +132,6 @@ class FlightServiceImplTest {
         );
 
         assertEquals("flightNumber already exists", exception.getMessage());
+        assertEquals(ErrorCode.FLIGHT_NUMBER_ALREADY_EXISTS, exception.getErrorCode());
     }
 }
