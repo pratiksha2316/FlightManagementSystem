@@ -2,6 +2,61 @@
 
 This project is a Spring Boot based flight booking system. The initial goal is to build the backend APIs incrementally, starting with a simple health/status endpoint and then adding flight creation, flight instance creation, and booking functionality.
 
+## Quick Test Flow
+
+Start the application:
+
+```bash
+./gradlew bootRun
+```
+
+Check the app status:
+
+```bash
+curl -i http://localhost:8080/status
+```
+
+Create one flight:
+
+```bash
+curl -i -X POST http://localhost:8080/flights \
+  -H "Content-Type: application/json" \
+  -d '{
+    "flightNumber": "AI101",
+    "totalSeats": 180
+  }'
+```
+
+Create one flight instance:
+
+```bash
+curl -i -X POST http://localhost:8080/flight-instances \
+  -H "Content-Type: application/json" \
+  -d '{
+    "flightNumber": "AI101",
+    "initialDepartureTime": "2026-06-04 10:30",
+    "flightHours": 3
+  }'
+```
+
+Expected `flightInstanceId`:
+
+```text
+AI101_2026-06-04 10:30
+```
+
+Create one booking:
+
+```bash
+curl -i -X POST http://localhost:8080/bookings \
+  -H "Content-Type: application/json" \
+  -d '{
+    "flightInstanceId": "AI101_2026-06-04 10:30",
+    "numberOfSeats": 2,
+    "passengerNames": ["Alice", "Bob"]
+  }'
+```
+
 ## Current Scope
 
 The system will support three core functional requirements:
